@@ -1,5 +1,6 @@
 all:
-	asm6 main.asm star-command.nes
-	fceux star-command.nes
+	ca65 *.asm -o main.o 
+	ld65 *.o -o star-command.nes -t nes
+	Mesen star-command.nes
 clean:
-	rm *.nes
+	rm *.nes *.o
