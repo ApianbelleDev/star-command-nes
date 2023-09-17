@@ -2,7 +2,7 @@
 .define GLOBAL_INC
 
 ; init.asm
-.global Reset, SpriteData, PaletteData
+.global shadowoam, Reset, SpriteData, PaletteData
 
 ; main.asm
 .global main, forever
