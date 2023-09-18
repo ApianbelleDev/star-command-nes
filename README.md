@@ -17,7 +17,7 @@ on PATH, typing `make run` will load the rom with Mesen2 :3
 
 ## Credits
 this project wouldn't be possible without these cool people
-[sylvie](https://github.com/zlago) - my sweet girlfriend. provided the makefile to use, and helped with general assembly help.
+[sylvie](https://github.com/zlago) - my sweet girlfriend. provided the makefile to use, and helped with general assembly help.<br>
 the entire NESdev community. seriously, without them this **definitely** wouldn't be possible, cause the entire community is just so helpful :3
-
+<br><br>
 that's all for now~
