@@ -14,11 +14,9 @@
 .segment "ZEROPAGE"
 .segment "STACK"
 .segment "SHADOWOAM"
-	shadowoam:
-		.res 64 * 4
+	shadowoam: .res 64 * 4
 .segment "BSS"
 	playerX: .res 1 	; player's X position (will be updated)
-	playerY: .res 1 	; player's Y position (will *not* be updated)
 .segment "CODE"
 	Reset:
 	    sei        ; ignore IRQs
@@ -83,17 +81,10 @@
 		.byte $0e, $27, $10, $30,  $0f, $0f, $0f, $0f,  $0f, $0f, $0f, $0f,  $0f, $0f, $0f, $0f ; background palette data
 		.byte $0e, $00, $10, $30,  $0f, $0f, $0f, $0f,  $0f, $0f, $0f, $0f,  $0f, $0f, $0f, $0f ; sprite palette data
 	SpriteData:
-		; load values into x and y variables
-		lda #$80
-		sta playerX
-		sta playerY
-
-		; load 0 into the A register to reset it
-		lda #$0
 		
 		; y, tile num, attributes, x
 		; tile 0
-		.byte playerY, $00, $00, playerX
+		.byte $80, $00, $00, $80
 	.segment "VECTORS"
 	    .word  NMI
 	    .word  Reset

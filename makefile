@@ -37,3 +37,6 @@ obj/%.o: src/%.asm $(ASM_REQS) $(GFX_REQS) obj/
 
 bin/${BIN_NAME}.nes: $(LINK_REQS) bin/
 	ld65 ${LINK_FLAGS} -o $@ obj/*.o
+
+run:
+	Mesen bin/${BIN_NAME}.nes
