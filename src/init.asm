@@ -12,6 +12,7 @@
 	.byte $0
 	.byte $0, $0, $0, $0 	; unused. 
 .segment "ZEROPAGE"
+	btn: .res 1
 .segment "STACK"
 .segment "SHADOWOAM"
 	shadowoam: .res 64 * 4
@@ -67,8 +68,54 @@
 	@vblankwait2:
 	    bit $2002
 	    bpl @vblankwait2
-	mainLoop:
-		jmp main
+
+	; SETUP PPU FOR READING AND WRITING
+	lda $2002    ; read PPU status to reset the high/low latch to high
+	lda #$3F
+	sta $2006    ; write the high byte of $3F10 address
+	lda #$10
+	sta $2006    ; write the low byte of $3F10 address
+		
+	ldx #$00
+	LoadPalettes:
+		lda PaletteData, x      	                          
+		sta $2007               
+		inx                     
+		cpx #$20               
+		bne LoadPalettes 
+			     
+		ldx #$00
+	LoadSprites:
+		lda SpriteData, x		
+		sta shadowoam, x
+		inx
+		cpx #$30 ;(4 bytes per sprite, 1 sprite *for now*)
+		bne LoadSprites
+				
+	; re-enable interrupts
+	lda #%10000000   ; enable NMI, sprites from Pattern Table 0
+	sta $2000
+			
+	lda #%00010000   ; enable sprites
+	sta $2001
+
+	jmp main
+
+	; poll joypads
+	readJoypad:
+		lda #$01
+		sta $4016
+		lsr a
+		sta $4016
+	
+	loopJoypad:
+		lda $4016
+		lsr a
+		rol btn
+		bcc loopJoypad
+		rts
+	
+			
 	NMI:
 		lda #$00
 		sta $2003 	; set the low byte (00) of the RAM address

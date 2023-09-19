@@ -2,7 +2,7 @@
 .define GLOBAL_INC
 
 ; variables
-.global shadowoam, playerX
+.global btn, shadowoam, playerX
 ; init.asm
 .global Reset, SpriteData, PaletteData
 
